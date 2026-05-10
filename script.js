@@ -86,3 +86,32 @@ function newGame() {
   document.getElementById("message").innerText = "Your move — Hit or Stand?";
   displayHands();
 }
+
+function hit() {
+  playerHand.push(dealCard());
+  displayHands();
+
+  if (getHandValue(playerHand) > 21) {
+    document.getElementById("message").innerText = "Bust! You lose.";
+  }
+}
+
+function stand() {
+  while (getHandValue(dealerHand) < 17) {
+    dealerHand.push(dealCard());
+  }
+  displayHands();
+
+  let playerTotal = getHandValue(playerHand);
+  let dealerTotal = getHandValue(dealerHand);
+
+  if (dealerTotal > 21) {
+    document.getElementById("message").innerText = "Dealer busts! You win!";
+  } else if (playerTotal > dealerTotal) {
+    document.getElementById("message").innerText = "You win!";
+  } else if (playerTotal < dealerTotal) {
+    document.getElementById("message").innerText = "Dealer wins.";
+  } else {
+    document.getElementById("message").innerText = "Push — it's a tie!";
+  }
+}
