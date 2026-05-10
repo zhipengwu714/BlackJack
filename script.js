@@ -7,6 +7,7 @@ const cardValues = [2,3,4,5,6,7,8,9,10,10,10,10,11];
 let deck = [];
 let playerHand = [];
 let dealerHand = [];
+const redSuits = ["♥", "♦"];
 
 function buildDeck() {
   deck = [];
@@ -61,11 +62,14 @@ function displayHands() {
   dealerDiv.innerHTML = "";
 
   for (let i = 0; i < playerHand.length; i++) {
-    playerDiv.innerHTML += "<span class='card'>" + playerHand[i].name + playerHand[i].suit + "</span>";
+    let redSuits = ["♥", "♦"];
+    let playerColor = redSuits.includes(playerHand[i].suit) ? "card red" : "card";
+    playerDiv.innerHTML += "<span class='" + playerColor + "'>" + playerHand[i].name + playerHand[i].suit + "</span>";
   }
 
   for (let i = 0; i < dealerHand.length; i++) {
-    dealerDiv.innerHTML += "<span class='card'>" + dealerHand[i].name + dealerHand[i].suit + "</span>";
+    let dealerColor = redSuits.includes(dealerHand[i].suit) ? "card red" : "card";
+    dealerDiv.innerHTML += "<span class='" + dealerColor + "'>" + dealerHand[i].name + dealerHand[i].suit + "</span>";
   }
 
   document.getElementById("player-score").innerText = getHandValue(playerHand);

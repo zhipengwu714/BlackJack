@@ -26,3 +26,20 @@ button:hover {
   font-weight: bold;
   margin-top: 20px;
 }
+
+.card {
+  display: inline-block;
+  background: white;
+  color: #1a1a1a;
+  border-radius: 8px;
+  padding: 10px 14px;
+  margin: 5px;
+  font-size: 22px;
+  font-weight: bold;
+  min-width: 50px;
+  text-align: center;
+}
+
+.card.red {
+  color: #c0392b;
+}
