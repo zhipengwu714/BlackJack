@@ -81,8 +81,13 @@ function displayHands() {
   document.getElementById("dealer-score").innerText = getHandValue(dealerHand);
 }
 
+function setButtons(playing) {
+  document.getElementById("hit-btn").disabled = !playing;
+  document.getElementById("stand-btn").disabled = !playing;
+}
+
 function newGame() {
-  gameOver=false;
+  gameOver = false;
   buildDeck();
   shuffleDeck();
   playerHand = [];
@@ -95,6 +100,7 @@ function newGame() {
 
   document.getElementById("message").innerText = "Your move — Hit or Stand?";
   displayHands();
+  setButtons(true);
 }
 
 function hit() {
@@ -103,11 +109,13 @@ function hit() {
 
   if (getHandValue(playerHand) > 21) {
     document.getElementById("message").innerText = "Bust! You lose.";
+    setButtons(false);
   }
 }
 
 function stand() {
   gameOver = true;
+  setButtons(false);
   while (getHandValue(dealerHand) < 17) {
     dealerHand.push(dealCard());
   }
