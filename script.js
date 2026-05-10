@@ -11,6 +11,8 @@ const redSuits = ["♥", "♦"];
 let gameOver = false;
 let chips = 1000;
 let currentBet = 0;
+let wins = 0;
+let losses = 0;
 
 function buildDeck() {
   deck = [];
@@ -110,8 +112,12 @@ function clearBet() {
 function updateChips(result) {
   if (result === "win") {
     chips += currentBet;
+    wins++;
+    document.getElementById("win-count").innerText = wins;
   } else if (result === "lose") {
     chips -= currentBet;
+    losses++;
+    document.getElementById("loss-count").innerText = losses;
   }
   currentBet = 0;
   document.getElementById("chip-count").innerText = chips;
@@ -179,13 +185,26 @@ function stand() {
 
 function saveStats() {
   localStorage.setItem("chips", chips);
+  localStorage.setItem("wins", wins);
+  localStorage.setItem("losses", losses);
 }
 
 function loadStats() {
   let savedChips = localStorage.getItem("chips");
+  let savedWins = localStorage.getItem("wins");
+  let savedLosses = localStorage.getItem("losses");
+
   if (savedChips !== null) {
     chips = parseInt(savedChips);
     document.getElementById("chip-count").innerText = chips;
+  }
+  if (savedWins !== null) {
+    wins = parseInt(savedWins);
+    document.getElementById("win-count").innerText = wins;
+  }
+  if (savedLosses !== null) {
+    losses = parseInt(savedLosses);
+    document.getElementById("loss-count").innerText = losses;
   }
 }
 
