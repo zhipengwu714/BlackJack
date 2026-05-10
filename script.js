@@ -116,6 +116,7 @@ function updateChips(result) {
   currentBet = 0;
   document.getElementById("chip-count").innerText = chips;
   document.getElementById("bet-amount").innerText = 0;
+  saveStats();
 }
 
 function newGame() {
@@ -175,3 +176,17 @@ function stand() {
     updateChips("tie");
   }
 }
+
+function saveStats() {
+  localStorage.setItem("chips", chips);
+}
+
+function loadStats() {
+  let savedChips = localStorage.getItem("chips");
+  if (savedChips !== null) {
+    chips = parseInt(savedChips);
+    document.getElementById("chip-count").innerText = chips;
+  }
+}
+
+loadStats();
