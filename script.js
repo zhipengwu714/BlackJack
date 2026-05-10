@@ -9,6 +9,8 @@ let playerHand = [];
 let dealerHand = [];
 const redSuits = ["♥", "♦"];
 let gameOver = false;
+let chips = 1000;
+let currentBet = 0;
 
 function buildDeck() {
   deck = [];
@@ -86,7 +88,41 @@ function setButtons(playing) {
   document.getElementById("stand-btn").disabled = !playing;
 }
 
+function placeBet(amount) {
+  if (chips <= 0) {
+    document.getElementById("message").innerText = "Out of chips! Refresh to restart.";
+    return;
+  }
+  if (currentBet + amount > chips) {
+    document.getElementById("message").innerText = "Not enough chips!";
+    return;
+  }
+  currentBet += amount;
+  document.getElementById("chip-count").innerText = chips;
+  document.getElementById("bet-amount").innerText = currentBet;
+}
+
+function clearBet() {
+  currentBet = 0;
+  document.getElementById("bet-amount").innerText = 0;
+}
+
+function updateChips(result) {
+  if (result === "win") {
+    chips += currentBet;
+  } else if (result === "lose") {
+    chips -= currentBet;
+  }
+  currentBet = 0;
+  document.getElementById("chip-count").innerText = chips;
+  document.getElementById("bet-amount").innerText = 0;
+}
+
 function newGame() {
+  if (currentBet === 0) {
+    document.getElementById("message").innerText = "Place a bet first!";
+    return;
+  }
   gameOver = false;
   buildDeck();
   shuffleDeck();
@@ -110,6 +146,7 @@ function hit() {
   if (getHandValue(playerHand) > 21) {
     document.getElementById("message").innerText = "Bust! You lose.";
     setButtons(false);
+    updateChips("lose");
   }
 }
 
@@ -126,11 +163,15 @@ function stand() {
 
   if (dealerTotal > 21) {
     document.getElementById("message").innerText = "Dealer busts! You win!";
+    updateChips("win");
   } else if (playerTotal > dealerTotal) {
     document.getElementById("message").innerText = "You win!";
+    updateChips("win");
   } else if (playerTotal < dealerTotal) {
     document.getElementById("message").innerText = "Dealer wins.";
+    updateChips("lose");
   } else {
     document.getElementById("message").innerText = "Push — it's a tie!";
+    updateChips("tie");
   }
 }
