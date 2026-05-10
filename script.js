@@ -8,6 +8,7 @@ let deck = [];
 let playerHand = [];
 let dealerHand = [];
 const redSuits = ["♥", "♦"];
+let gameOver = false;
 
 function buildDeck() {
   deck = [];
@@ -68,8 +69,12 @@ function displayHands() {
   }
 
   for (let i = 0; i < dealerHand.length; i++) {
-    let dealerColor = redSuits.includes(dealerHand[i].suit) ? "card red" : "card";
-    dealerDiv.innerHTML += "<span class='" + dealerColor + "'>" + dealerHand[i].name + dealerHand[i].suit + "</span>";
+    if (i === 1 && !gameOver) {
+      dealerDiv.innerHTML += "<span class='card hidden-card'>?</span>";
+    } else {
+      let dealerColor = redSuits.includes(dealerHand[i].suit) ? "card red" : "card";
+      dealerDiv.innerHTML += "<span class='" + dealerColor + "'>" + dealerHand[i].name + dealerHand[i].suit + "</span>";
+    }
   }
 
   document.getElementById("player-score").innerText = getHandValue(playerHand);
@@ -77,6 +82,7 @@ function displayHands() {
 }
 
 function newGame() {
+  gameOver=false;
   buildDeck();
   shuffleDeck();
   playerHand = [];
@@ -101,6 +107,7 @@ function hit() {
 }
 
 function stand() {
+  gameOver = true;
   while (getHandValue(dealerHand) < 17) {
     dealerHand.push(dealCard());
   }

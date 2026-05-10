@@ -71,3 +71,9 @@ button:hover {
 .card.red {
   color: #c0392b;
 }
+
+.hidden-card {
+  background: #1a6b3a;
+  color: white;
+  border: 2px solid white;
+}
