@@ -130,6 +130,7 @@ function updateChips(result) {
   currentBet = 0;
   document.getElementById("chip-count").innerText = chips;
   document.getElementById("bet-amount").innerText = 0;
+  updateLeaderboard();
   saveStats();
 }
 
@@ -234,6 +235,8 @@ function loadStats() {
     document.getElementById("player-area").querySelector("h2").innerText = savedName;
     document.getElementById("name-area").style.display = "none";
   }
+  let savedLeaderboard = JSON.parse(localStorage.getItem("leaderboard") || "[]");
+  displayLeaderboard(savedLeaderboard);
 }
 
 function resetStats() {
@@ -241,7 +244,10 @@ function resetStats() {
   wins = 0;
   losses = 0;
   currentBet = 0;
-  localStorage.clear();
+  localStorage.setItem("chips", chips);
+  localStorage.setItem("wins", wins);
+  localStorage.setItem("losses", losses);
+  localStorage.removeItem("leaderboard");
   document.getElementById("chip-count").innerText = chips;
   document.getElementById("win-count").innerText = wins;
   document.getElementById("loss-count").innerText = losses;
@@ -259,6 +265,30 @@ function setName() {
   document.getElementById("welcome-msg").innerText = "Welcome, " + name + "!";
   document.getElementById("player-area").querySelector("h2").innerText = name;
   document.getElementById("name-area").style.display = "none";
+}
+
+function updateLeaderboard() {
+  let name = localStorage.getItem("playerName") || "Anonymous";
+  let leaderboard = JSON.parse(localStorage.getItem("leaderboard") || "[]");
+
+  // Remove existing entry for this player
+  leaderboard = leaderboard.filter(entry => entry.name !== name);
+
+  // Add current score
+  leaderboard.push({ name: name, chips: chips });
+  leaderboard.sort((a, b) => b.chips - a.chips);
+  leaderboard = leaderboard.slice(0, 5);
+
+  localStorage.setItem("leaderboard", JSON.stringify(leaderboard));
+  displayLeaderboard(leaderboard);
+}
+
+function displayLeaderboard(leaderboard) {
+  let list = document.getElementById("leaderboard-list");
+  list.innerHTML = "";
+  for (let i = 0; i < leaderboard.length; i++) {
+    list.innerHTML += "<li>" + leaderboard[i].name + " — " + leaderboard[i].chips + " chips</li>";
+  }
 }
 
 loadStats();
