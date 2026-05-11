@@ -145,3 +145,67 @@ button:disabled {
 #name-area {
   margin-bottom: 10px;
 }
+
+#new-game-controls {
+  margin: 10px auto;
+}
+
+#new-game-controls button:first-child {
+  background: #539c71;
+  color: white;
+}
+
+#new-game-controls button:first-child:hover {
+  background: #27ae60;
+}
+
+#reset-btn {
+  background: transparent;
+  color: rgba(255,255,255,0.5);
+  font-size: 12px;
+  padding: 6px 14px;
+  border: 1px solid rgba(255,255,255,0.2);
+}
+
+#reset-btn:hover {
+  background: rgba(255,255,255,0.1);
+  color: white;
+}
+
+#bet-controls button:last-child {
+  background: #a58238;
+  color: white;
+}
+
+#bet-controls button:last-child:hover {
+  background: #a58c3c;
+}
+
+#leaderboard-area {
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 16px;
+  padding: 20px;
+  margin: 10px auto;
+  max-width: 600px;
+}
+
+#leaderboard-list {
+  list-style: none;
+  padding: 0;
+  margin: 10px 0 0;
+}
+
+#leaderboard-list li {
+  display: flex;
+  justify-content: space-between;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 8px;
+  padding: 10px 16px;
+  margin-bottom: 6px;
+  font-size: 14px;
+}
+
+#leaderboard-list li:first-child {
+  background: rgba(255, 215, 0, 0.2);
+  border: 1px solid rgba(255, 215, 0, 0.4);
+}

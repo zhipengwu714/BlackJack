@@ -318,7 +318,7 @@ function displayLeaderboard(leaderboard) {
   let list = document.getElementById("leaderboard-list");
   list.innerHTML = "";
   for (let i = 0; i < leaderboard.length; i++) {
-    list.innerHTML += "<li>" + leaderboard[i].name + " — Best: " + leaderboard[i].best + " chips | Now: " + leaderboard[i].chips + " chips</li>";
+    list.innerHTML += "<li><span>" + (i + 1) + ". " + leaderboard[i].name + "</span><span>Best: " + leaderboard[i].best + " | Now: " + leaderboard[i].chips + "</span></li>";
   }
 }
 
