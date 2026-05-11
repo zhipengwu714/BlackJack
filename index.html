@@ -28,9 +28,9 @@
     </div>
 
     <div id="bet-controls">
-      <button onclick="placeBet(10)">+10</button>
-      <button onclick="placeBet(50)">+50</button>
-      <button onclick="placeBet(100)">+100</button>
+      <input type="range" id="bet-slider" min="10" max="500" step="10" value="10">
+      <p>Bet Amount: <span id="slider-value">10</span></p>
+      <button onclick="placeBet()">Place Bet</button>
       <button onclick="clearBet()">Clear Bet</button>
     </div>
 

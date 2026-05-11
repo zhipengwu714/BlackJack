@@ -96,16 +96,17 @@ function setButtons(playing) {
   document.getElementById("double-btn").disabled = !playing;
 }
 
-function placeBet(amount) {
+function placeBet() {
+  let amount = parseInt(document.getElementById("bet-slider").value);
   if (chips <= 0) {
-    document.getElementById("message").innerText = "Out of chips! Refresh to restart.";
+    document.getElementById("message").innerText = "Out of chips! Reset to restart.";
     return;
   }
-  if (currentBet + amount > chips) {
+  if (amount > chips) {
     document.getElementById("message").innerText = "Not enough chips!";
     return;
   }
-  currentBet += amount;
+  currentBet = amount;
   document.getElementById("chip-count").innerText = chips;
   document.getElementById("bet-amount").innerText = currentBet;
 }
@@ -137,6 +138,7 @@ function updateChips(result) {
     localStorage.setItem("bestChips", bestChips);
   }
   updateLeaderboard();
+  document.getElementById("bet-slider").max = chips;
   saveStats();
 }
 
@@ -268,6 +270,7 @@ function loadStats() {
   }
   let savedLeaderboard = JSON.parse(localStorage.getItem("leaderboard") || "[]");
   displayLeaderboard(savedLeaderboard);
+  document.getElementById("bet-slider").max = chips;
 }
 
 function resetStats() {
@@ -284,6 +287,7 @@ function resetStats() {
   document.getElementById("loss-count").innerText = losses;
   document.getElementById("bet-amount").innerText = 0;
   document.getElementById("message").innerText = "Stats reset! Place a bet to start.";
+  document.getElementById("bet-slider").max = chips;
 }
 
 function setName() {
@@ -321,5 +325,9 @@ function displayLeaderboard(leaderboard) {
     list.innerHTML += "<li><span>" + (i + 1) + ". " + leaderboard[i].name + "</span><span>Best: " + leaderboard[i].best + " | Now: " + leaderboard[i].chips + "</span></li>";
   }
 }
+
+document.getElementById("bet-slider").addEventListener("input", function() {
+  document.getElementById("slider-value").innerText = this.value;
+});
 
 loadStats();
