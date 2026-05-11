@@ -82,7 +82,11 @@ function displayHands() {
   }
 
   document.getElementById("player-score").innerText = getHandValue(playerHand);
-  document.getElementById("dealer-score").innerText = getHandValue(dealerHand);
+  if (gameOver) {
+    document.getElementById("dealer-score").innerText = getHandValue(dealerHand);
+  } else {
+    document.getElementById("dealer-score").innerText = "?";
+  }
 }
 
 function setButtons(playing) {
@@ -142,6 +146,7 @@ function newGame() {
   dealerHand.push(dealCard());
 
   document.getElementById("message").innerText = "Your move — Hit or Stand?";
+  document.getElementById("message").className = "";
   displayHands();
   setButtons(true);
 }
@@ -152,6 +157,7 @@ function hit() {
 
   if (getHandValue(playerHand) > 21) {
     document.getElementById("message").innerText = "Bust! You lose.";
+    document.getElementById("message").className = "message-lose";
     setButtons(false);
     updateChips("lose");
   }
@@ -170,15 +176,19 @@ function stand() {
 
   if (dealerTotal > 21) {
     document.getElementById("message").innerText = "Dealer busts! You win!";
+    document.getElementById("message").className = "message-win";
     updateChips("win");
   } else if (playerTotal > dealerTotal) {
     document.getElementById("message").innerText = "You win!";
+    document.getElementById("message").className = "message-win";
     updateChips("win");
   } else if (playerTotal < dealerTotal) {
     document.getElementById("message").innerText = "Dealer wins.";
+    document.getElementById("message").className = "message-lose";
     updateChips("lose");
   } else {
     document.getElementById("message").innerText = "Push — it's a tie!";
+    document.getElementById("message").className = "message-tie";
     updateChips("tie");
   }
 }

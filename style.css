@@ -120,3 +120,24 @@ button:disabled {
 #bet-controls button:hover {
   background: #ffe340;
 }
+
+#message {
+  font-size: 22px;
+  font-weight: bold;
+  margin-top: 20px;
+  padding: 10px;
+  border-radius: 8px;
+  transition: background 0.3s;
+}
+
+.message-win {
+  background: rgba(50, 205, 50, 0.3);
+}
+
+.message-lose {
+  background: rgba(220, 50, 50, 0.3);
+}
+
+.message-tie {
+  background: rgba(255, 255, 255, 0.15);
+}
