@@ -118,6 +118,10 @@ function updateChips(result) {
     chips += currentBet;
     wins++;
     document.getElementById("win-count").innerText = wins;
+  } else if (result === "blackjack") {
+    chips += Math.floor(currentBet * 1.5);
+    wins++;
+    document.getElementById("win-count").innerText = wins;
   } else if (result === "lose") {
     chips -= currentBet;
     losses++;
@@ -146,6 +150,13 @@ function newGame() {
   dealerHand.push(dealCard());
 
   document.getElementById("message").innerText = "Your move — Hit or Stand?";
+  if (getHandValue(playerHand) === 21) {
+    document.getElementById("message").innerText = "Blackjack! You win!";
+    document.getElementById("message").className = "message-win";
+    updateChips("blackjack");
+    setButtons(false);
+    gameOver = true;
+  }
   document.getElementById("message").className = "";
   displayHands();
   setButtons(true);
