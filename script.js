@@ -97,11 +97,13 @@ function setButtons(playing) {
 }
 
 function placeBet() {
-  let amount = parseInt(document.getElementById("bet-slider").value);
   if (chips <= 0) {
-    document.getElementById("message").innerText = "Out of chips! Reset to restart.";
+    document.getElementById("message").innerText = "You're out of chips! Reset to play again.";
+    document.getElementById("message").className = "message-lose";
+    document.getElementById("bet-controls").style.display = "none";
     return;
   }
+  let amount = parseInt(document.getElementById("bet-slider").value);
   if (amount > chips) {
     document.getElementById("message").innerText = "Not enough chips!";
     return;
@@ -138,7 +140,17 @@ function updateChips(result) {
     localStorage.setItem("bestChips", bestChips);
   }
   updateLeaderboard();
-  document.getElementById("bet-slider").max = chips;
+  if (chips <= 0) {
+    chips = 0;
+    document.getElementById("chip-count").innerText = 0;
+    document.getElementById("message").innerText = "You're out of chips! Reset to play again.";
+    document.getElementById("message").className = "message-lose";
+    document.getElementById("bet-controls").style.display = "none";
+    document.getElementById("controls").style.display = "none";
+    document.getElementById("new-game-controls").style.display = "block";
+  } else {
+    document.getElementById("bet-slider").max = chips;
+  }
   saveStats();
 }
 
