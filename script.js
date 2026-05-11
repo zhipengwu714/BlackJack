@@ -227,6 +227,13 @@ function loadStats() {
     losses = parseInt(savedLosses);
     document.getElementById("loss-count").innerText = losses;
   }
+  let savedName = localStorage.getItem("playerName");
+  if (savedName !== null) {
+    document.getElementById("player-name").value = savedName;
+    document.getElementById("welcome-msg").innerText = "Welcome back, " + savedName + "!";
+    document.getElementById("player-area").querySelector("h2").innerText = savedName;
+    document.getElementById("name-area").style.display = "none";
+  }
 }
 
 function resetStats() {
@@ -240,6 +247,18 @@ function resetStats() {
   document.getElementById("loss-count").innerText = losses;
   document.getElementById("bet-amount").innerText = 0;
   document.getElementById("message").innerText = "Stats reset! Place a bet to start.";
+}
+
+function setName() {
+  let name = document.getElementById("player-name").value;
+  if (name === "") {
+    document.getElementById("welcome-msg").innerText = "Please enter a name!";
+    return;
+  }
+  localStorage.setItem("playerName", name);
+  document.getElementById("welcome-msg").innerText = "Welcome, " + name + "!";
+  document.getElementById("player-area").querySelector("h2").innerText = name;
+  document.getElementById("name-area").style.display = "none";
 }
 
 loadStats();

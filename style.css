@@ -141,3 +141,7 @@ button:disabled {
 .message-tie {
   background: rgba(255, 255, 255, 0.15);
 }
+
+#name-area {
+  margin-bottom: 10px;
+}
