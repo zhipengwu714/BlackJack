@@ -165,10 +165,13 @@ function newGame() {
     updateChips("blackjack");
     setButtons(false);
     gameOver = true;
+    setStage("gameover");
+    return;
   }
   document.getElementById("message").className = "";
   displayHands();
   setButtons(true);
+  setStage("playing");
 }
 
 function hit() {
@@ -180,6 +183,7 @@ function hit() {
     document.getElementById("message").className = "message-lose";
     setButtons(false);
     updateChips("lose");
+    setStage("gameover");
   }
 }
 
@@ -231,6 +235,7 @@ function stand() {
     document.getElementById("message").className = "message-tie";
     updateChips("tie");
   }
+  setStage("gameover");
 }
 
 function saveStats() {
@@ -288,6 +293,7 @@ function resetStats() {
   document.getElementById("bet-amount").innerText = 0;
   document.getElementById("message").innerText = "Stats reset! Place a bet to start.";
   document.getElementById("bet-slider").max = chips;
+  setStage("betting");
 }
 
 function setName() {
@@ -326,10 +332,30 @@ function displayLeaderboard(leaderboard) {
   }
 }
 
+function setStage(stage) {
+  let betControls = document.getElementById("bet-controls");
+  let controls = document.getElementById("controls");
+  let newGameControls = document.getElementById("new-game-controls");
+
+  if (stage === "betting") {
+    betControls.style.display = "block";
+    controls.style.display = "none";
+    newGameControls.style.display = "block";
+  } else if (stage === "playing") {
+    betControls.style.display = "none";
+    controls.style.display = "block";
+    newGameControls.style.display = "none";
+  } else if (stage === "gameover") {
+    betControls.style.display = "block";
+    controls.style.display = "none";
+    newGameControls.style.display = "block";
+  }
+}
+
 document.getElementById("bet-slider").addEventListener("input", function() {
   document.getElementById("slider-value").innerText = this.value;
 });
 
 document.getElementById("slider-value").innerText = document.getElementById("bet-slider").value;
-
+setStage("betting");
 loadStats();
