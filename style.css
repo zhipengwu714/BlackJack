@@ -109,12 +109,13 @@ button:disabled {
   background: #ffd700;
   color: #1a1a1a;
   border: none;
-  padding: 10px 20px;
+  padding: 12px 28px;
   margin: 6px;
-  font-size: 14px;
+  font-size: 16px;
   font-weight: bold;
   border-radius: 8px;
   cursor: pointer;
+  width: 160px;
 }
 
 #bet-controls button:hover {
@@ -159,19 +160,6 @@ button:disabled {
   background: #27ae60;
 }
 
-#reset-btn {
-  background: transparent;
-  color: rgba(255,255,255,0.5);
-  font-size: 12px;
-  padding: 6px 14px;
-  border: 1px solid rgba(255,255,255,0.2);
-}
-
-#reset-btn:hover {
-  background: rgba(255,255,255,0.1);
-  color: white;
-}
-
 #bet-controls button:last-child {
   background: #a58238;
   color: white;
@@ -208,4 +196,19 @@ button:disabled {
 #leaderboard-list li:first-child {
   background: rgba(255, 215, 0, 0.2);
   border: 1px solid rgba(255, 215, 0, 0.4);
+}
+
+#reset-btn {
+  background: transparent !important;
+  color: rgba(255,255,255,0.5) !important;
+  border: 1px solid rgba(255,255,255,0.2) !important;
+  padding: 12px 28px !important;
+  font-size: 16px !important;
+  font-weight: bold !important;
+  width: 160px !important;
+}
+
+#reset-btn:hover {
+  background: rgba(255,255,255,0.1) !important;
+  color: white !important;
 }
