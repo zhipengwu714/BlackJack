@@ -208,4 +208,17 @@ function loadStats() {
   }
 }
 
+function resetStats() {
+  chips = 1000;
+  wins = 0;
+  losses = 0;
+  currentBet = 0;
+  localStorage.clear();
+  document.getElementById("chip-count").innerText = chips;
+  document.getElementById("win-count").innerText = wins;
+  document.getElementById("loss-count").innerText = losses;
+  document.getElementById("bet-amount").innerText = 0;
+  document.getElementById("message").innerText = "Stats reset! Place a bet to start.";
+}
+
 loadStats();
