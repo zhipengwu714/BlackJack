@@ -10,6 +10,7 @@ let dealerHand = [];
 const redSuits = ["♥", "♦"];
 let gameOver = false;
 let chips = 1000;
+let bestChips = 1000;
 let currentBet = 0;
 let wins = 0;
 let losses = 0;
@@ -131,6 +132,10 @@ function updateChips(result) {
   currentBet = 0;
   document.getElementById("chip-count").innerText = chips;
   document.getElementById("bet-amount").innerText = 0;
+  if (chips > bestChips) {
+    bestChips = chips;
+    localStorage.setItem("bestChips", bestChips);
+  }
   updateLeaderboard();
   saveStats();
 }
@@ -230,12 +235,14 @@ function saveStats() {
   localStorage.setItem("chips", chips);
   localStorage.setItem("wins", wins);
   localStorage.setItem("losses", losses);
+  localStorage.setItem("bestChips", bestChips);
 }
 
 function loadStats() {
   let savedChips = localStorage.getItem("chips");
   let savedWins = localStorage.getItem("wins");
   let savedLosses = localStorage.getItem("losses");
+  let savedBestChips = localStorage.getItem("bestChips");
 
   if (savedChips !== null) {
     chips = parseInt(savedChips);
@@ -248,6 +255,9 @@ function loadStats() {
   if (savedLosses !== null) {
     losses = parseInt(savedLosses);
     document.getElementById("loss-count").innerText = losses;
+  }
+  if (savedBestChips !== null) {
+    bestChips = parseInt(savedBestChips);
   }
   let savedName = localStorage.getItem("playerName");
   if (savedName !== null) {
@@ -292,12 +302,12 @@ function updateLeaderboard() {
   let name = localStorage.getItem("playerName") || "Anonymous";
   let leaderboard = JSON.parse(localStorage.getItem("leaderboard") || "[]");
 
-  // Remove existing entry for this player
   leaderboard = leaderboard.filter(entry => entry.name !== name);
 
-  // Add current score
-  leaderboard.push({ name: name, chips: chips });
-  leaderboard.sort((a, b) => b.chips - a.chips);
+  let best = chips > bestChips ? chips : bestChips;
+
+  leaderboard.push({ name: name, chips: chips, best: best });
+  leaderboard.sort((a, b) => b.best - a.best);
   leaderboard = leaderboard.slice(0, 5);
 
   localStorage.setItem("leaderboard", JSON.stringify(leaderboard));
@@ -308,7 +318,7 @@ function displayLeaderboard(leaderboard) {
   let list = document.getElementById("leaderboard-list");
   list.innerHTML = "";
   for (let i = 0; i < leaderboard.length; i++) {
-    list.innerHTML += "<li>" + leaderboard[i].name + " — " + leaderboard[i].chips + " chips</li>";
+    list.innerHTML += "<li>" + leaderboard[i].name + " — Best: " + leaderboard[i].best + " chips | Now: " + leaderboard[i].chips + " chips</li>";
   }
 }
 
