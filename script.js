@@ -330,4 +330,6 @@ document.getElementById("bet-slider").addEventListener("input", function() {
   document.getElementById("slider-value").innerText = this.value;
 });
 
+document.getElementById("slider-value").innerText = document.getElementById("bet-slider").value;
+
 loadStats();
