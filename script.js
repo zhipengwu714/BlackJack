@@ -92,6 +92,7 @@ function displayHands() {
 function setButtons(playing) {
   document.getElementById("hit-btn").disabled = !playing;
   document.getElementById("stand-btn").disabled = !playing;
+  document.getElementById("double-btn").disabled = !playing;
 }
 
 function placeBet(amount) {
@@ -172,6 +173,26 @@ function hit() {
     document.getElementById("message").className = "message-lose";
     setButtons(false);
     updateChips("lose");
+  }
+}
+
+function doubleDown() {
+  if (currentBet > chips) {
+    document.getElementById("message").innerText = "Not enough chips to double down!";
+    return;
+  }
+  currentBet *= 2;
+  document.getElementById("bet-amount").innerText = currentBet;
+  playerHand.push(dealCard());
+  displayHands();
+
+  if (getHandValue(playerHand) > 21) {
+    document.getElementById("message").innerText = "Bust! You lose.";
+    document.getElementById("message").className = "message-lose";
+    setButtons(false);
+    updateChips("lose");
+  } else {
+    stand();
   }
 }
 
